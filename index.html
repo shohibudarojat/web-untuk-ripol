@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untuk Ripa 🖤 | Scrapbook Kenangan Kita</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- QR Code Generator -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- Google Fonts for Indie/Lo-Fi Vibe -->
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #121214;
+            color: #e4e4e7;
+            overflow-x: hidden;
+        }
+        .font-mono-indie { font-family: 'Courier Prime', monospace; }
+        .font-handwriting { font-family: 'Caveat', cursive; }
+        .film-grain {
+            background-image: url("https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop");
+            background-size: cover;
+            opacity: 0.03;
+            pointer-events: none;
+        }
+        .polaroid-card { perspective: 1000px; }
+        .polaroid-inner {
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .polaroid-card.flipped .polaroid-inner { transform: rotateY(180deg); }
+        .polaroid-front, .polaroid-back { backface-visibility: hidden; }
+        .polaroid-back { transform: rotateY(180deg); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #18181b; }
+        ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 4px; }
+        @keyframes amberGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.2); }
+            50% { box-shadow: 0 0 30px rgba(245, 158, 11, 0.5); }
+        }
+        .glow-box { animation: amberGlow 4s infinite ease-in-out; }
+    </style>
+</head>
+<body class="bg-[#0f0e11] text-zinc-100 selection:bg-amber-500 selection:text-black">
+
+    <!-- Ambient Lo-Fi Background Audio -->
+    <audio id="bg-music" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Floating Audio Control -->
+    <div class="fixed top-4 right-4 z-50 flex items-center gap-3">
+        <div id="audio-status" class="hidden sm:flex items-center gap-2 bg-zinc-900/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-zinc-700 text-xs text-amber-400 font-mono-indie">
+            <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
+            <span>Lo-Fi Vibe: Off</span>
+        </div>
+        <button onclick="toggleMusic()" id="music-toggle" class="bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold p-3 rounded-full shadow-lg shadow-amber-500/20 transition cursor-pointer flex items-center justify-center">
+            <i class="fa-solid fa-music text-lg"></i>
+        </button>
+    </div>
+
+    <!-- HERO INTRO SECTION -->
+    <section class="relative min-h-screen flex flex-col items-center justify-center p-6 text-center overflow-hidden">
+        <div class="absolute inset-0 film-grain z-0"></div>
+        <div class="absolute w-96 h-96 bg-amber-600/10 rounded-full blur-3xl -top-20 -left-20 pointer-events-none"></div>
+        <div class="absolute w-96 h-96 bg-rose-600/10 rounded-full blur-3xl -bottom-20 -right-20 pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-xl mx-auto flex flex-col items-center">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-xs font-mono-indie text-amber-400 mb-6 shadow-md">
+                <i class="fa-solid fa-compact-disc animate-spin"></i>
+                <span>Special Scrapbook For: Ripa</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight mb-4 bg-gradient-to-r from-amber-200 via-amber-400 to-rose-400 bg-clip-text text-transparent">
+                Arsip Perjalanan & Cerita Kita Berdua
+            </h1>
+
+            <p class="font-handwriting text-2xl sm:text-3xl text-zinc-300 mb-8 max-w-lg">
+                "Setiap sudut kota jadi saksi, kalau bersamamu adalah bab paling tenang dalam hidupku."
+            </p>
+
+            <a href="#scrapbook" class="group flex flex-col items-center gap-2 text-zinc-400 hover:text-amber-400 transition mt-4">
+                <span class="text-xs font-mono-indie tracking-wider uppercase">Buka Lembar Album</span>
+                <div class="w-8 h-12 rounded-full border-2 border-zinc-700 flex items-start justify-center p-1 group-hover:border-amber-500 transition">
+                    <div class="w-1.5 h-3 bg-amber-500 rounded-full animate-bounce"></div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- POLAROID SCRAPBOOK GALLERY SECTION -->
+    <section id="scrapbook" class="py-20 px-4 max-w-5xl mx-auto relative">
+        <div class="text-center mb-16">
+            <span class="text-amber-500 font-mono-indie text-xs uppercase tracking-widest block mb-2">// 01. MEMORI & POLAROID</span>
+            <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Album Kenangan Kita 📸</h2>
+            <p class="text-zinc-400 text-sm mt-2 max-w-md mx-auto">Ketuk kartu polaroid di bawah untuk membalik dan membaca catatan di baliknya.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            
+            <!-- Polaroid 1 -->
+            <div class="polaroid-card cursor-pointer h-96" onclick="this.classList.toggle('flipped')">
+                <div class="polaroid-inner relative w-full h-full shadow-2xl rounded-xl">
+                    <div class="polaroid-front absolute inset-0 bg-zinc-100 text-zinc-900 p-4 pb-6 rounded-xl flex flex-col justify-between border border-zinc-300 transform rotate-1 hover:rotate-0 transition duration-300">
+                        <div class="w-full h-64 bg-zinc-200 rounded-lg overflow-hidden relative">
+                            <!-- Ganti link gambar di src="" dengan link foto kalian -->
+                            <img src="https://drive.google.com/drive/folders/1z0NsiWDI6RE3PJAXmUxqJObt_fNDbkLt?usp=sharing" alt="Foto 1" class="w-full h-full object-cover">
+                            <span class="absolute top-2 right-2 bg-black/60 backdrop-blur-md text-white text-[10px] px-2 py-0.5 rounded font-mono">01. Hari Pertama</span>
+                        </div>
+                        <div class="text-center pt-3">
+                            <p class="font-handwriting text-2xl text-zinc-800 font-bold">Awal semuanya mulai ✨</p>
+                            <span class="text-[10px] text-zinc-500 font-mono">(Ketuk untuk balik foto)</span>
+                        </div>
+                    </div>
+                    <div class="polaroid-back absolute inset-0 bg-amber-50 text-zinc-900 p-6 rounded-xl flex flex-col justify-center items-center text-center border border-amber-200 shadow-inner">
+                        <i class="fa-solid fa-heart text-rose-500 text-3xl mb-3"></i>
+                        <h4 class="font-bold text-lg mb-2 text-amber-900">Catatan di Balik Foto:</h4>
+                        <p class="font-handwriting text-xl text-zinc-800 leading-relaxed">
+                            "Ingat kan hari ini? Waktu kita ketawa-tawa canggung tapi seru banget. Gak nyangka bisa sejauh ini sama kamu."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Polaroid 2 -->
+            <div class="polaroid-card cursor-pointer h-96" onclick="this.classList.toggle('flipped')">
+                <div class="polaroid-inner relative w-full h-full shadow-2xl rounded-xl">
+                    <div class="polaroid-front absolute inset-0 bg-zinc-100 text-zinc-900 p-4 pb-6 rounded-xl flex flex-col justify-between border border-zinc-300 transform -rotate-1 hover:rotate-0 transition duration-300">
+                        <div class="w-full h-64 bg-zinc-200 rounded-lg overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=600&auto=format&fit=crop" alt="Foto 2" class="w-full h-full object-cover">
+                            <span class="absolute top-2 right-2 bg-black/60 backdrop-blur-md text-white text-[10px] px-2 py-0.5 rounded font-mono">02. Kopi & Senja</span>
+                        </div>
+                        <div class="text-center pt-3">
+                            <p class="font-handwriting text-2xl text-zinc-800 font-bold">Nongkrong favorit ☕</p>
+                            <span class="text-[10px] text-zinc-500 font-mono">(Ketuk untuk balik foto)</span>
+                        </div>
+                    </div>
+                    <div class="polaroid-back absolute inset-0 bg-amber-50 text-zinc-900 p-6 rounded-xl flex flex-col justify-center items-center text-center border border-amber-200 shadow-inner">
+                        <i class="fa-solid fa-mug-hot text-amber-600 text-3xl mb-3"></i>
+                        <h4 class="font-bold text-lg mb-2 text-amber-900">Catatan di Balik Foto:</h4>
+                        <p class="font-handwriting text-xl text-zinc-800 leading-relaxed">
+                            "Ngobrol sama kamu tuh gak pernah ngebosenin. Waktu rasanya jalan cepet banget kalau lagi bareng kamu."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Polaroid 3 -->
+            <div class="polaroid-card cursor-pointer h-96 sm:col-span-2 md:col-span-1" onclick="this.classList.toggle('flipped')">
+                <div class="polaroid-inner relative w-full h-full shadow-2xl rounded-xl">
+                    <div class="polaroid-front absolute inset-0 bg-zinc-100 text-zinc-900 p-4 pb-6 rounded-xl flex flex-col justify-between border border-zinc-300 transform rotate-1 hover:rotate-0 transition duration-300">
+                        <div class="w-full h-64 bg-zinc-200 rounded-lg overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop" alt="Foto 3" class="w-full h-full object-cover">
+                            <span class="absolute top-2 right-2 bg-black/60 backdrop-blur-md text-white text-[10px] px-2 py-0.5 rounded font-mono">03. Ripa & Skena</span>
+                        </div>
+                        <div class="text-center pt-3">
+                            <p class="font-handwriting text-2xl text-zinc-800 font-bold">Kesayangan aku 🖤</p>
+                            <span class="text-[10px] text-zinc-500 font-mono">(Ketuk untuk balik foto)</span>
+                        </div>
+                    </div>
+                    <div class="polaroid-back absolute inset-0 bg-amber-50 text-zinc-900 p-6 rounded-xl flex flex-col justify-center items-center text-center border border-amber-200 shadow-inner">
+                        <i class="fa-solid fa-star text-amber-500 text-3xl mb-3"></i>
+                        <h4 class="font-bold text-lg mb-2 text-amber-900">Catatan di Balik Foto:</h4>
+                        <p class="font-handwriting text-xl text-zinc-800 leading-relaxed">
+                            "Terima kasih sudah jadi rumah tempat aku pulang dan selalu ngertiin aku. Selamanya ya, Ripa."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ALASAN SECTION -->
+    <section class="py-20 px-4 bg-zinc-900/50 border-y border-zinc-800">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-12">
+                <span class="text-amber-500 font-mono-indie text-xs uppercase tracking-widest block mb-2">// 02. REASON WHY</span>
+                <h2 class="text-3xl font-bold tracking-tight">Hal Kecil yang Bikin Sayang 🤔</h2>
+                <p class="text-zinc-400 text-sm mt-2">Alasan kenapa kamu satu-satunya di kepala.</p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden transition duration-300">
+                    <button onclick="toggleAccordion('acc-1')" class="w-full p-5 text-left flex justify-between items-center cursor-pointer hover:bg-zinc-800/50 transition">
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 h-8 rounded-full bg-amber-500/10 text-amber-400 flex items-center justify-center font-mono text-sm font-bold">01</span>
+                            <span class="font-semibold text-lg">Cara kamu ketawa pas denger lelucon recehku</span>
+                        </div>
+                        <i id="icon-acc-1" class="fa-solid fa-chevron-down text-zinc-500 transition-transform duration-300"></i>
+                    </button>
+                    <div id="acc-1" class="hidden px-6 pb-6 text-zinc-400 text-sm font-mono-indie leading-relaxed border-t border-zinc-800/60 pt-4">
+                        "Meskipun kadang garing, kamu tetep ketawa. Itu bikin aku ngerasa jadi cowok paling beruntung."
+                    </div>
+                </div>
+
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden transition duration-300">
+                    <button onclick="toggleAccordion('acc-2')" class="w-full p-5 text-left flex justify-between items-center cursor-pointer hover:bg-zinc-800/50 transition">
+                        <div class="flex items-center gap-4">
+                            <span class="w-8 h-8 rounded-full bg-rose-500/10 text-rose-400 flex items-center justify-center font-mono text-sm font-bold">02</span>
+                            <span class="font-semibold text-lg">Perhatian tulus yang gak dibuat-buat</span>
+                        </div>
+                        <i id="icon-acc-2" class="fa-solid fa-chevron-down text-zinc-500 transition-transform duration-300"></i>
+                    </button>
+                    <div id="acc-2" class="hidden px-6 pb-6 text-zinc-400 text-sm font-mono-indie leading-relaxed border-t border-zinc-800/60 pt-4">
+                        "Selalu ngecek aku udah sampai rumah atau belum, dan sabar banget ngadepin mood-ku."
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SURAT CINTA / ENVELOPE SECTION -->
+    <section class="py-20 px-4 max-w-2xl mx-auto">
+        <div class="text-center mb-12">
+            <span class="text-rose-500 font-mono-indie text-xs uppercase tracking-widest block mb-2">// 03. SECRET ENVELOPE</span>
+            <h2 class="text-3xl font-bold tracking-tight">Surat Buat Ripa ✉️</h2>
+            <p class="text-zinc-400 text-sm mt-2">Ketuk amplop di bawah untuk membaca isi hatiku.</p>
+        </div>
+
+        <div class="relative bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-10 shadow-2xl overflow-hidden">
+            <div id="envelope-closed" class="flex flex-col items-center justify-center py-12 cursor-pointer group" onclick="openLetter()">
+                <div class="w-24 h-20 bg-amber-600/20 border-2 border-amber-500/50 rounded-lg flex items-center justify-center mb-6 relative group-hover:scale-105 transition duration-300 shadow-lg">
+                    <div class="absolute -top-3 bg-amber-500 text-zinc-950 font-bold px-3 py-1 rounded-full text-xs shadow">
+                        <i class="fa-solid fa-heart mr-1"></i> Buka Surat
+                    </div>
+                    <i class="fa-solid fa-envelope-open-text text-amber-400 text-4xl"></i>
+                </div>
+                <p class="font-handwriting text-2xl text-zinc-300">"Ada pesan rahasia buat kamu di sini..."</p>
+                <span class="text-xs text-amber-400 font-mono mt-2 underline">Ketuk amplop untuk membaca</span>
+            </div>
+
+            <div id="letter-content" class="hidden space-y-6">
+                <div class="flex justify-between items-center border-b border-zinc-800 pb-4">
+                    <span class="font-mono text-xs text-amber-400">Kepada: Ripa Tercinta ❤️</span>
+                    <span class="font-mono text-xs text-zinc-500">Waktu: Selamanya</span>
+                </div>
+
+                <div class="space-y-4 font-handwriting text-2xl sm:text-3xl text-zinc-200 leading-relaxed">
+                    <p>Hai Sayang,</p>
+                    <p>
+                        Mungkin web sederhana ini gak cukup buat nyatet semua rasa sayangku. Tapi aku pengen kamu tau, kehadiranmu di hidupku adalah hal paling berharga.
+                    </p>
+                    <p>
+                        Terima kasih sudah bertahan, jadi tempat paling nyaman buat pulang, dan alesan di balik senyumku tiap hari.
+                    </p>
+                    <p class="text-right pt-6 text-amber-400 font-bold">
+                        — Dari cowok yang paling beruntung punya kamu, 🖤
+                    </p>
+                </div>
+
+                <div class="pt-6 border-t border-zinc-800 text-center">
+                    <button onclick="closeLetter()" class="text-xs text-zinc-500 hover:text-zinc-300 font-mono underline cursor-pointer">
+                        [ Tutup Kembali Surat ]
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QR CODE SECTION -->
+    <section class="py-20 px-4 bg-zinc-900/50 border-t border-zinc-800 text-center">
+        <div class="max-w-md mx-auto">
+            <span class="text-amber-500 font-mono-indie text-xs uppercase tracking-widest block mb-2">// 04. SHARE HUB</span>
+            <h2 class="text-3xl font-bold tracking-tight mb-3">Scan Barcode Ini di HP Ripa! 📱</h2>
+            <p class="text-zinc-400 text-sm mb-8">Biar gampang dibuka lewat smartphone.</p>
+
+            <div class="bg-white p-6 rounded-3xl shadow-2xl inline-block mb-6 border-4 border-amber-500/30">
+                <div id="qrcode" class="flex justify-center"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-8 text-center text-xs text-zinc-600 font-mono border-t border-zinc-900">
+        <p>Made with 🖤 exclusively for Ripa. Indie Lo-Fi Scrapbook Edition © 2026</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        let isPlaying = false;
+        const audio = document.getElementById('bg-music');
+        const audioStatus = document.getElementById('audio-status');
+        const musicToggleBtn = document.getElementById('music-toggle');
+
+        function toggleMusic() {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                audioStatus.querySelector('span:last-child').innerText = 'Lo-Fi Vibe: Off';
+                musicToggleBtn.innerHTML = '<i class="fa-solid fa-music text-lg"></i>';
+                musicToggleBtn.classList.remove('bg-rose-500');
+                musicToggleBtn.classList.add('bg-amber-500');
+            } else {
+                audio.play().catch(() => {});
+                isPlaying = true;
+                audioStatus.querySelector('span:last-child').innerText = 'Lo-Fi Vibe: On 🎵';
+                musicToggleBtn.innerHTML = '<i class="fa-solid fa-volume-high text-lg"></i>';
+                musicToggleBtn.classList.remove('bg-amber-500');
+                musicToggleBtn.classList.add('bg-rose-500');
+            }
+        }
+
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                content.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        function openLetter() {
+            document.getElementById('envelope-closed').classList.add('hidden');
+            document.getElementById('letter-content').classList.remove('hidden');
+        }
+
+        function closeLetter() {
+            document.getElementById('letter-content').classList.add('hidden');
+            document.getElementById('envelope-closed').classList.remove('hidden');
+        }
+
+        window.onload = function() {
+            new QRCode(document.getElementById("qrcode"), {
+                text: window.location.href,
+                width: 140,
+                height: 140,
+                colorDark: "#18181b",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        };
+    </script>
+</body>
+</html>
